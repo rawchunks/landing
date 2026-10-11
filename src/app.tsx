@@ -15,8 +15,10 @@ export const App: React.FC = () => {
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    const container = containerRef.current;
+    if (el && container) {
+      const top = el.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
+      container.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     }
   };
 
@@ -44,11 +46,15 @@ export const App: React.FC = () => {
 
   return (
     <div className="viewport">
-      <div className="scanlines" />
+      <a className="skip-link" href="#main">Skip to content</a>
+      <div className="scanlines" aria-hidden="true" />
       <Header onNavClick={scrollTo} />
 
       {/* Snap-Scrolling Main Feed */}
-      <main ref={containerRef} className="snap-container">
+      <main id="main" ref={containerRef} className="snap-container" onClick={(event) => {
+        const link = (event.target as HTMLElement).closest('a[href^="#"]');
+        if (link) { event.preventDefault(); scrollTo(link.getAttribute('href')!.slice(1)); }
+      }}>
         <section id="hero" className="snap-section">
           <Hero onExplore={() => scrollTo('features')} />
         </section>
@@ -93,7 +99,9 @@ export const App: React.FC = () => {
               cursor: 'pointer',
               transition: 'all 0.2s',
             }}
-            title={s}
+            title={s === 'showcase' ? 'Editor' : s === 'stack' ? 'Build with us' : s}
+            aria-label={s === 'showcase' ? 'Editor' : s === 'stack' ? 'Build with us' : s}
+            aria-current={activeSection === s ? 'location' : undefined}
           />
         ))}
       </div>

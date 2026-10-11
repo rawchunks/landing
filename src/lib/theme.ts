@@ -38,6 +38,8 @@ export const BRANDING = {
   manifesto: 'RAW AUDIO CHUNKS // NEURAL LATENTS // SURGICAL IN-PAINTING',
   appUrl: 'https://app.rawchunks.space',
   siteUrl: 'https://rawchunks.space',
+  githubUrl: 'https://github.com/rawchunks',
+  docsUrl: 'https://docs.rawchunks.space',
 };
 
 export const SPACING = {
