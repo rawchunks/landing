@@ -1,106 +1,20 @@
-import React from 'react';
-import { COLORS } from '../lib/theme';
-import { Glitch } from '../components/glitch';
+import { useState } from 'react';
+import { Tabs } from '../components/tabs';
+import { BRANDING } from '../lib/theme';
+import { Button } from '../components/button';
 
-export interface Tech {
-  name: string;
-  role: string;
-  desc: string;
-  color: string;
-}
-
-export interface Props {
-  onNext?: () => void;
-}
-
-export const Stack: React.FC<Props> = () => {
-  const stack: Tech[] = [
-    {
-      name: 'Google Lyria',
-      role: 'Realtime Latent Audio Streamer',
-      desc: 'Sub-second audio synthesis delivering high-fidelity musical continuous stems.',
-      color: COLORS.primary,
-    },
-    {
-      name: 'Google Gemini',
-      role: 'Generative Lyricist & Musicologist',
-      desc: 'Structure-aware lyrical parsing [Verse/Chorus] and style descriptor intelligence.',
-      color: COLORS.secondary,
-    },
-    {
-      name: 'Web Audio DSP',
-      role: 'Browser Multi-Track Inpainter',
-      desc: 'Client-side boundary cross-fading, stem channel mixing, and waveform slicing.',
-      color: COLORS.accent,
-    },
-    {
-      name: 'NVIDIA H100 Cluster',
-      role: 'Kubernetes Neural Pipeline',
-      desc: 'Dedicated inference pods running low-latency stem separation and in-painting models.',
-      color: COLORS.warning,
-    },
-  ];
-
+export const Stack = (_props: { onNext?: () => void }) => {
+  const [selected, setSelected] = useState(0);
   return (
-    <div
-      id="stack"
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: 'clamp(20px, 4vh, 40px) clamp(16px, 6vw, 80px)',
-        boxSizing: 'border-box',
-        gap: 'clamp(12px, 2vh, 24px)',
-      }}
-    >
-      <div>
-        <Glitch
-          text="INFRASTRUCTURE // NEURAL PIPELINE"
-          style={{
-            fontSize: 'var(--font-lg)',
-            color: COLORS.warning,
-            fontWeight: 900,
-            letterSpacing: 'var(--letter-spacing-wide)',
-          }}
-          intensity="low"
-        />
-        <p style={{ color: COLORS.textSecondary, fontSize: 'var(--font-sm)', margin: '4px 0 0 0' }}>
-          Zero buffering. Massive parallel inference clusters for instant song rendering.
-        </p>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
-        {stack.map((item, idx) => (
-          <Glitch
-            key={idx}
-            style={{
-              padding: '18px',
-              borderColor: `${item.color}40`,
-              backgroundColor: 'rgba(10, 10, 10, 0.85)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 'var(--font-md)', fontWeight: 900, color: item.color }}>
-                {item.name}
-              </span>
-              <span style={{ fontSize: 'var(--font-xs)', color: COLORS.textTertiary }}>
-                0{idx + 1}
-              </span>
-            </div>
-            <span style={{ fontSize: 'var(--font-xs)', color: COLORS.text, fontWeight: 700 }}>
-              {item.role}
-            </span>
-            <p style={{ fontSize: 'var(--font-xs)', color: COLORS.textSecondary, lineHeight: 1.5, margin: 0 }}>
-              {item.desc}
-            </p>
-          </Glitch>
-        ))}
-      </div>
+  <div className="section-content build-content">
+    <div className="section-heading"><h2>Voices, publishing and APIs</h2><p>Use a custom voice, publish an original, or build music tools into your own product.</p></div>
+    <div className="capability-tabs"><Tabs id="capabilities" label="More capabilities" items={['Voices', 'Licenses', 'APIs']} selected={selected} onSelect={setSelected} /></div>
+    <div id="capabilities-panel" className={`capability-list selected-${selected}`}>
+      <article><span className="capability-marker" /><div><h3>Custom voices</h3><p>Upload a vocal reference or save a song’s voice. Reuse a trained voice when it’s ready for your generation mode.</p></div><a className="text-link" href={`${BRANDING.docsUrl}/app/voices`}>Voice guide</a></article>
+      <article><span className="capability-marker" /><div><h3>Publish and license</h3><p>Offer an original in the Market with your license price and allocation. Buy a remix license and make new versions of a track.</p></div><a className="text-link" href={`${BRANDING.docsUrl}/app/licenses`}>Licensing guide</a></article>
+      <article><span className="capability-marker" /><div><h3>Developer APIs</h3><p>Generate and edit audio through the Rawchunks API. Manage songs, takes and saved voices with your own interface.</p></div><a className="text-link" href={`${BRANDING.docsUrl}/dev/overview`}>Developer guides</a></article>
     </div>
+    <div className="closing"><p>Open the workstation</p><Button size="lg" href={BRANDING.appUrl}>Launch app</Button></div>
+  </div>
   );
 };
