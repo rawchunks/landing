@@ -1,161 +1,28 @@
-import React, { useState } from 'react';
-import { COLORS } from '../lib/theme';
-import { Glitch } from '../components/glitch';
-import { Button } from '../components/button';
+import { useState } from 'react';
+import { Arrow, Tabs } from '../components/tabs';
 
-export interface Item {
-  title: string;
-  subtitle: string;
-  points: string[];
-  color: string;
-  badge: string;
-}
+const services = [
+  { name: 'Generate', title: 'Generate music', text: 'Describe the sound. Write vocals in the lyrics canvas, or make it instrumental. Set language, duration, tempo and key; choose Fast or Studio Master.', image: 'generation-settings', alt: 'Rawchunks generation settings with Fast and Studio Master controls.' },
+  { name: 'Rework', title: 'Rework a section', text: 'Select a range. Describe the replacement, adjust its strength, and compare the new take with the original before you merge it.', image: 'editor-rework', alt: 'Rework controls with mode, strength, lyrics and sound description.' },
+  { name: 'Layer', title: 'Layer an instrument', text: 'Ask for an instrument and describe how it should sound. Use Master or selected lanes as the reference, then place the new part alongside them.', image: 'editor-layer', alt: 'Layer controls with Instrument and Sound Description fields.' },
+  { name: 'Extract', title: 'Extract a section', text: 'Select a range on the waveform and extract it as a take. Listen, process it separately, and mount the result where it belongs.', image: 'editor-timeline', alt: 'A selected waveform range with the Extract action and an extracted take below.' },
+  { name: 'Separate', title: 'Separate stems', text: 'Separate audio into stems, or request a supported instrument. Work on a vocal or instrument part, then balance it with the rest of the song.', image: 'editor-separate', alt: 'Separate controls in the Rawchunks Studio toolbox.' },
+  { name: 'Extend', title: 'Extend a track', text: 'Continue the track or add an intro. Set the added duration, describe the new passage, and supply lyrics when you want vocals.', image: 'editor-extend', alt: 'Extend controls for duration, start or end placement, and lyrics.' },
+  { name: 'Restyle', title: 'Restyle a track', text: 'Describe a new style for existing audio. Adjust how closely it follows the source, listen to the take, and keep the version you prefer.', image: 'editor-restyle', alt: 'Restyle controls with style description and source influence.' },
+] as const;
 
-export interface Props {
-  onNext?: () => void;
-}
-
-export const Features: React.FC<Props> = () => {
+export const Features = (_props: { onNext?: () => void }) => {
   const [selected, setSelected] = useState(0);
-
-  const items: Item[] = [
-    {
-      title: 'Neural Generation',
-      subtitle: 'Simple & Custom Prompt Orchestration',
-      badge: 'LATENT SYNTHESIS',
-      color: COLORS.primary,
-      points: [
-        'Natural text prompting with intelligent style expansion',
-        'Structured custom lyric parsing [Intro, Verse, Drop, Outro]',
-        'Dual parallel generation variations per prompt request',
-        'High-density genre, tempo (BPM), and mood tag autocomplete',
-      ],
-    },
-    {
-      title: 'Surgical In-Painting',
-      subtitle: 'Timeline Precision Section Replacement',
-      badge: 'WAVEFORM BRUSH',
-      color: COLORS.secondary,
-      points: [
-        'Select any time window [Start - End] on the interactive waveform',
-        'Rewrite lyrics or prompt specifically for the highlighted region',
-        'Seamless boundary cross-fade stitching with zero pitch-drift',
-        'Drop extend markers to continue tracks forward or prepend intros',
-      ],
-    },
-    {
-      title: 'Stem Decomposition',
-      subtitle: '4-Channel Isolated Audio Stems',
-      badge: 'DSP SEPARATION',
-      color: COLORS.accent,
-      points: [
-        'Instant demuxing into Vocals, Bass, Drums, and Instruments',
-        'Individual stem volume faders, solo, and mute controls',
-        'Inpaint only the vocal stem without altering backing beats',
-        'Direct multi-stem export for external DAWs (Ableton, FL, Logic)',
-      ],
-    },
-  ];
-
+  const item = services[selected];
+  const change = (delta: number) => setSelected((current) => (current + delta + services.length) % services.length);
   return (
-    <div
-      id="features"
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: 'clamp(20px, 4vh, 40px) clamp(16px, 6vw, 80px)',
-        boxSizing: 'border-box',
-        gap: 'clamp(12px, 2vh, 24px)',
-      }}
-    >
-      <div>
-        <Glitch
-          text="CORE ARCHITECTURE // SUNO SURPASS"
-          style={{
-            fontSize: 'var(--font-lg)',
-            color: COLORS.primary,
-            fontWeight: 900,
-            letterSpacing: 'var(--letter-spacing-wide)',
-          }}
-          intensity="low"
-        />
-        <p style={{ color: COLORS.textSecondary, fontSize: 'var(--font-sm)', margin: '4px 0 0 0' }}>
-          Engineered for producers who demand surgical control over latent music generation.
-        </p>
+    <div className="section-content features-content">
+      <div className="section-heading"><h2>Generate and edit</h2><p>Use the same music tools in the app or through the Rawchunks API.</p></div>
+      <div className="service-selector"><Tabs id="services" label="Music operations" items={services.map((service) => service.name)} selected={selected} onSelect={setSelected} /><div className="carousel-arrows"><button type="button" aria-label="Previous operation" onClick={() => change(-1)}><Arrow direction="left" /></button><button type="button" aria-label="Next operation" onClick={() => change(1)}><Arrow direction="right" /></button></div></div>
+      <div id="services-panel" role="tabpanel" aria-labelledby={`services-tab-${selected}`} className="service-panel">
+        <div className="service-copy" key={item.name}><h3>{item.title}</h3><p>{item.text}</p><span className="service-position">{selected + 1} / {services.length}</span></div>
+        <figure className={`service-image ${item.name === 'Extract' ? 'wide-image' : ''}`}><img src={`/images/${item.image}.jpg`} alt={item.alt} width={item.name === 'Generate' ? 790 : item.name === 'Extract' ? 1255 : 911} height={item.name === 'Generate' ? 460 : item.name === 'Extract' ? 525 : item.name === 'Separate' ? 410 : item.name === 'Restyle' ? 430 : 620} loading="lazy" /><figcaption>A Pro studio for your music</figcaption></figure>
       </div>
-
-      {/* Feature Selector Tabs */}
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-        {items.map((item, idx) => (
-          <Button
-            key={idx}
-            size="sm"
-            variant={selected === idx ? 'primary' : 'ghost'}
-            onClick={() => setSelected(idx)}
-          >
-            {item.title}
-          </Button>
-        ))}
-      </div>
-
-      {/* Feature Card Display */}
-      <Glitch
-        style={{
-          padding: 'clamp(16px, 3vh, 32px)',
-          borderColor: items[selected].color,
-          boxShadow: `0 0 16px ${items[selected].color}25`,
-          backgroundColor: 'rgba(10, 10, 10, 0.9)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <div>
-            <h2 style={{ color: items[selected].color, fontSize: 'var(--font-xl)', margin: 0 }}>
-              {items[selected].title}
-            </h2>
-            <span style={{ color: COLORS.textSecondary, fontSize: 'var(--font-xs)', letterSpacing: 'var(--letter-spacing-base)' }}>
-              {items[selected].subtitle}
-            </span>
-          </div>
-          <span
-            style={{
-              padding: '4px 10px',
-              border: `1px solid ${items[selected].color}`,
-              fontSize: 'var(--font-xs)',
-              color: items[selected].color,
-              fontWeight: 700,
-            }}
-          >
-            {items[selected].badge}
-          </span>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginTop: '8px' }}>
-          {items[selected].points.map((pt, pIdx) => (
-            <div
-              key={pIdx}
-              style={{
-                display: 'flex',
-                gap: '10px',
-                alignItems: 'flex-start',
-                padding: '10px 12px',
-                backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-              }}
-            >
-              <span style={{ color: items[selected].color, fontWeight: 900 }}>›</span>
-              <span style={{ color: COLORS.text, fontSize: 'var(--font-sm)', lineHeight: 1.5 }}>
-                {pt}
-              </span>
-            </div>
-          ))}
-        </div>
-      </Glitch>
     </div>
   );
 };
