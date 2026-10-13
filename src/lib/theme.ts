@@ -34,8 +34,8 @@ export const COLORS = {
 export const BRANDING = {
   name: 'RAWCHUNKS',
   slogan: 'CREATE · EDIT · OWN',
-  tagline: 'RAW SOUND. RECOMBINANT AUDIO. ZERO COMPROMISE.',
-  manifesto: 'RAW AUDIO CHUNKS // NEURAL LATENTS // SURGICAL IN-PAINTING',
+  tagline: 'RAW CHUNKS. INFINITE VARIATIONS. YOUR OWN SOUND.',
+  manifesto: 'CREATE // EDIT // OWN // RELEASE // REMIX // EARN',
   appUrl: 'https://app.rawchunks.space',
   siteUrl: 'https://rawchunks.space',
   githubUrl: 'https://github.com/rawchunks',
