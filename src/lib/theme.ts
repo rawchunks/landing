@@ -33,10 +33,10 @@ export const COLORS = {
 
 export const BRANDING = {
   name: 'RAWCHUNKS',
-  slogan: 'CREATE · EDIT · OWN',
+  slogan: 'CREATE · LICENSE · REMIX · EARN',
   tagline: 'RAW CHUNKS. INFINITE VARIATIONS. YOUR OWN SOUND.',
-  manifesto: 'CREATE // EDIT // OWN // RELEASE // REMIX // EARN',
-  appUrl: 'https://app.rawchunks.space',
+  manifesto: 'CREATE AT YOUR OWN CONDITIONS.',
+  appUrl: 'http://localhost:3001/studio',
   siteUrl: 'https://rawchunks.space',
   githubUrl: 'https://github.com/rawchunks',
   docsUrl: 'https://docs.rawchunks.space',

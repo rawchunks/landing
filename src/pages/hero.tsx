@@ -6,7 +6,7 @@ export const Hero = (_props: { onExplore?: () => void }) => (
     <div className="hero-copy">
       <h1>{BRANDING.tagline}</h1>
       <p className="product-label">{BRANDING.slogan}</p>
-      <p className="hero-description">Generate vocal or instrumental music. Rework sections, add instruments and separate stems. Arrange keys, drums, samples and live code in the editor.</p>
+      <p className="hero-description">AI-powered Music Production Suite. Rawchunks lets you generate, edit and license music that you truly own.</p>
       <p className="manifesto">{BRANDING.manifesto}</p>
       <div className="hero-actions"><Button size="lg" href={BRANDING.appUrl}>Make music</Button><a className="text-link" href="#showcase">See the editor</a></div>
     </div>
