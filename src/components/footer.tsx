@@ -5,6 +5,6 @@ export const Footer = (_props: { onNavClick?: (target: string) => void }) => (
     <img src="/mark.svg" width="28" height="28" alt="" />
     <span className="footer-manifesto">{BRANDING.manifesto}</span>
     <span>© {new Date().getFullYear()} Rawchunks</span>
-    <nav aria-label="Footer"><a href={BRANDING.docsUrl}>Documentation</a><a href={BRANDING.githubUrl}>GitHub</a></nav>
+    <nav aria-label="Footer"><a href={BRANDING.docsUrl}>Documentation</a><a href={BRANDING.githubUrl}>GitHub</a><a href="/brand">Brand assets</a></nav>
   </footer>
 );
