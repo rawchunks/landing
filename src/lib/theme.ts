@@ -36,7 +36,7 @@ export const BRANDING = {
   slogan: 'CREATE · LICENSE · REMIX · EARN',
   tagline: 'RAW CHUNKS. INFINITE VARIATIONS. YOUR OWN SOUND.',
   manifesto: 'CREATE AT YOUR OWN CONDITIONS.',
-  appUrl: 'http://localhost:3001/studio',
+  appUrl: 'http://app.rawchunks.space',
   siteUrl: 'https://rawchunks.space',
   githubUrl: 'https://github.com/rawchunks',
   docsUrl: 'https://docs.rawchunks.space',
