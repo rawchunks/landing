@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Arrow, Tabs } from '../components/tabs';
 
 const services = [
-  { name: 'Generate', title: 'Generate music', text: 'Describe the sound. Write vocals in the lyrics canvas, or make it instrumental. Set language, duration, tempo and key; choose Fast or Studio Master.', image: 'generation-settings', alt: 'Rawchunks generation settings with Fast and Studio Master controls.' },
+  { name: 'Generate', title: 'Generate music', text: 'Start with a sentence, image, hum or spoken idea. Songwriter fills the musical brief, lyrics, settings and cover. Review the draft, choose Fast or Master, then generate audio.', image: 'studio-vibe', alt: 'Rawchunks Vibe with an example prompt, image and hum controls, and the Vibe action.' },
   { name: 'Rework', title: 'Rework a section', text: 'Select a range. Describe the replacement, adjust its strength, and compare the new take with the original before you merge it.', image: 'editor-rework', alt: 'Rework controls with mode, strength, lyrics and sound description.' },
   { name: 'Layer', title: 'Layer an instrument', text: 'Ask for an instrument and describe how it should sound. Use Master or selected lanes as the reference, then place the new part alongside them.', image: 'editor-layer', alt: 'Layer controls with Instrument and Sound Description fields.' },
   { name: 'Extract', title: 'Extract a section', text: 'Select a range on the waveform and extract it as a take. Listen, process it separately, and mount the result where it belongs.', image: 'editor-timeline', alt: 'A selected waveform range with the Extract action and an extracted take below.' },
@@ -21,7 +21,7 @@ export const Features = (_props: { onNext?: () => void }) => {
       <div className="service-selector"><Tabs id="services" label="Music operations" items={services.map((service) => service.name)} selected={selected} onSelect={setSelected} /><div className="carousel-arrows"><button type="button" aria-label="Previous operation" onClick={() => change(-1)}><Arrow direction="left" /></button><button type="button" aria-label="Next operation" onClick={() => change(1)}><Arrow direction="right" /></button></div></div>
       <div id="services-panel" role="tabpanel" aria-labelledby={`services-tab-${selected}`} className="service-panel">
         <div className="service-copy" key={item.name}><h3>{item.title}</h3><p>{item.text}</p><span className="service-position">{selected + 1} / {services.length}</span></div>
-        <figure className={`service-image ${item.name === 'Extract' ? 'wide-image' : ''}`}><img src={`/images/${item.image}.jpg`} alt={item.alt} width={item.name === 'Generate' ? 790 : item.name === 'Extract' ? 1255 : 911} height={item.name === 'Generate' ? 460 : item.name === 'Extract' ? 525 : item.name === 'Separate' ? 410 : item.name === 'Restyle' ? 430 : 620} loading="lazy" /><figcaption>A Pro studio for your music</figcaption></figure>
+        <figure className={`service-image ${item.name === 'Extract' ? 'wide-image' : ''}`}><img src={`/images/${item.image}.${item.name === 'Generate' ? 'png' : 'jpg'}`} alt={item.alt} width={item.name === 'Generate' ? 1602 : item.name === 'Extract' ? 1255 : 911} height={item.name === 'Generate' ? 1376 : item.name === 'Extract' ? 525 : item.name === 'Separate' ? 410 : item.name === 'Restyle' ? 430 : 620} loading="lazy" /><figcaption>{item.name === 'Generate' ? 'Example brief in the current Studio' : 'A Pro studio for your music'}</figcaption></figure>
       </div>
     </div>
   );
